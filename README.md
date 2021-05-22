@@ -46,12 +46,10 @@ DB_PASSWORD=password
 php artisan make:migrate
 ```
 
-6. Add user on tinker
+6. Seed product per user
 
 ```bash
-php artisan tinker
-
-\App\Models\User::factory(10)->create();
+php artisan db:seed
 ```
 
 7. Server your application
@@ -69,11 +67,16 @@ https://<YOUR_DOMAIN>/graphql-playground
 9. Query this to the left panel
 
 ```bash
-{
-  user(id: 1) {
+query{
+  users{
     id
     name
     email
+    products{
+      id
+      name
+      description
+    }
   }
 }
 ```

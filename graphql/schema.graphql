@@ -5,14 +5,30 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 type Query {
-    users: [User!]! @paginate(defaultCount: 10)
+    users: [User!]! @all
+    products: [Product!]! @all
     user(id: ID @eq): User @find
+    calculateProduct(var1:Int! var2:Int!): CalculateProductOutput! 
 }
 
 type User {
     id: ID!
     name: String!
     email: String!
+    products: [Product] @hasMany
     created_at: DateTime!
     updated_at: DateTime!
+}
+
+type Product {
+    id: ID!
+    owner: User! @belongsTo
+    name: String!
+    description: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type CalculateProductOutput {
+	total: Int!
 }
